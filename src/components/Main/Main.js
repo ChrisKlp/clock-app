@@ -36,10 +36,10 @@ const InnerWrapper = styled.div`
 `;
 
 const Main = () => {
-  const { isActive } = useContext(Context);
+  const { isActive, isNight } = useContext(Context);
 
   return (
-    <Background>
+    <Background isNight={isNight}>
       <InnerWrapper active={isActive}>
         <Quotes/>
         <Clock/>

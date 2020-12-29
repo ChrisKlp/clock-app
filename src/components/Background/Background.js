@@ -5,8 +5,6 @@ import dayImgD from '../../assets/desktop/bg-image-daytime.jpg';
 import nightImgM from '../../assets/mobile/bg-image-nighttime.jpg';
 import nightImgT from '../../assets/tablet/bg-image-nighttime.jpg';
 import nightImgD from '../../assets/desktop/bg-image-nighttime.jpg';
-import { useContext } from 'react';
-import { Context } from '../../Context';
 
 const Wrapper = styled.main`
   position: relative;
@@ -38,8 +36,7 @@ const Wrapper = styled.main`
   }
 `;
 
-const Background = ({ children }) => {
-  const { isNight } = useContext(Context);
+const Background = ({ children, isNight }) => {
   return <Wrapper isNight={isNight}>{children}</Wrapper>;
 };
 
