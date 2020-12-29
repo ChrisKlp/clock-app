@@ -49,7 +49,7 @@ const Provider = ({ children }) => {
 
   const getTime = async () => {
     try {
-      const response = await axios.get('http://worldtimeapi.org/api/ip');
+      const response = await axios.get('https://worldtimeapi.org/api/ip');
       if (response.status === 200) {
         const {
           abbreviation,
@@ -97,7 +97,7 @@ const Provider = ({ children }) => {
 
   const getQuote = async () => {
     try {
-      const response = await axios.get('http://api.quotable.io/random');
+      const response = await axios.get('https://api.quotable.io/random');
       if (response.status === 200) {
         const { author, content } = response.data;
 
