@@ -1,10 +1,11 @@
+import axios from 'axios';
 import { createContext, useEffect, useState } from 'react';
 
 export const Context = createContext();
 
 const initialTimeState = {
   abbreviation: 'BST',
-  datetime: '11:37',
+  datetime: new Date(),
   day_of_week: 5,
   day_of_year: 295,
   city: 'London',
@@ -40,7 +41,7 @@ const Provider = ({ children }) => {
         return 'morning';
       case hour >= 12 && hour < 18:
         return 'afternoon';
-      case hour >= 18 && hour < 5:
+      case hour >= 18 || hour < 5:
         return 'evening';
       default:
         return 'morning';
@@ -49,8 +50,7 @@ const Provider = ({ children }) => {
 
   const getTime = async () => {
     try {
-      const response = await fetch('https://worldtimeapi.org/api/ip');
-      const data = await response.json();
+      const response = await axios.get('https://worldtimeapi.org/api/ip');
 
       if (response.status === 200) {
         const {
@@ -60,12 +60,12 @@ const Provider = ({ children }) => {
           day_of_year,
           timezone,
           week_number,
-        } = data;
+        } = response.data;
 
         setTime(prev => ({
           ...prev,
           abbreviation,
-          datetime: new Date(datetime).toTimeString().slice(0, 5),
+          datetime,
           day_of_week,
           day_of_year,
           timezone,
@@ -82,11 +82,10 @@ const Provider = ({ children }) => {
 
   const getLocation = async () => {
     try {
-      const response = await fetch('https://freegeoip.app/json');
-      const data = await response.json();
+      const response = await axios.get('https://freegeoip.app/json');
 
       if (response.status === 200) {
-        const { city, country_code } = data;
+        const { city, country_code } = response.data;
 
         setTime(prev => ({
           ...prev,
@@ -101,11 +100,10 @@ const Provider = ({ children }) => {
 
   const getQuote = async () => {
     try {
-      const response = await fetch('https://api.quotable.io/random');
-      const data = await response.json();
+      const response = await axios.get('https://api.quotable.io/random');
 
       if (response.status === 200) {
-        const { author, content } = data;
+        const { author, content } = response.data;
 
         setQuote({
           author,
@@ -118,6 +116,8 @@ const Provider = ({ children }) => {
   };
 
   useEffect(() => {
+    checkNightTime(time.datetime);
+    setDayTime(checkDayTime(time.datetime));
     getTime();
     getLocation();
     getQuote();

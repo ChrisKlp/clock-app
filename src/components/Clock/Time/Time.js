@@ -26,7 +26,7 @@ const TimeZone = styled.span`
 
 const Time = ({ time: { datetime, abbreviation } }) => (
   <Wrapper>
-    <Heading>{datetime}</Heading>
+    <Heading>{new Date(datetime).toTimeString().slice(0, 5)}</Heading>
     <TimeZone>{abbreviation}</TimeZone>
   </Wrapper>
 );
