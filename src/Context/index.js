@@ -50,7 +50,7 @@ const Provider = ({ children }) => {
 
   const getTime = async () => {
     try {
-      const response = await axios.get('https://worldtimeapi.org/api/ip');
+      const response = await axios.get('https://worldtimeapi.org/api/ip/');
 
       if (response.status === 200) {
         const {
@@ -82,7 +82,7 @@ const Provider = ({ children }) => {
 
   const getLocation = async () => {
     try {
-      const response = await axios.get('https://freegeoip.app/json');
+      const response = await axios.get('https://freegeoip.app/json/');
 
       if (response.status === 200) {
         const { city, country_code } = response.data;
@@ -100,7 +100,7 @@ const Provider = ({ children }) => {
 
   const getQuote = async () => {
     try {
-      const response = await axios.get('https://api.quotable.io/random');
+      const response = await axios.get('https://api.quotable.io/random/');
 
       if (response.status === 200) {
         const { author, content } = response.data;
