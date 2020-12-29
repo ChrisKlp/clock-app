@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { createContext, useEffect, useState } from 'react';
 
 export const Context = createContext();
@@ -43,13 +42,16 @@ const Provider = ({ children }) => {
         return 'afternoon';
       case hour >= 18 && hour < 5:
         return 'evening';
-        default: return 'morning';
+      default:
+        return 'morning';
     }
   };
 
   const getTime = async () => {
     try {
-      const response = await axios.get('https://worldtimeapi.org/api/ip');
+      const response = await fetch('https://worldtimeapi.org/api/ip');
+      const data = await response.json();
+
       if (response.status === 200) {
         const {
           abbreviation,
@@ -58,7 +60,7 @@ const Provider = ({ children }) => {
           day_of_year,
           timezone,
           week_number,
-        } = response.data;
+        } = data;
 
         setTime(prev => ({
           ...prev,
@@ -81,7 +83,8 @@ const Provider = ({ children }) => {
   const getLocation = async () => {
     try {
       const response = await fetch('https://freegeoip.app/json');
-      const data = await response.json()
+      const data = await response.json();
+
       if (response.status === 200) {
         const { city, country_code } = data;
 
@@ -98,9 +101,11 @@ const Provider = ({ children }) => {
 
   const getQuote = async () => {
     try {
-      const response = await axios.get('https://api.quotable.io/random');
+      const response = await fetch('https://api.quotable.io/random');
+      const data = await response.json();
+
       if (response.status === 200) {
-        const { author, content } = response.data;
+        const { author, content } = data;
 
         setQuote({
           author,
