@@ -43,7 +43,8 @@ const Provider = ({ children }) => {
         return 'afternoon';
       case hour >= 18 && hour < 5:
         return 'evening';
-        default: return 'morning';
+      default:
+        return 'morning';
     }
   };
 
@@ -80,7 +81,9 @@ const Provider = ({ children }) => {
 
   const getLocation = async () => {
     try {
-      const response = await axios.get('https://freegeoip.app/json');
+      const response = await axios.get('https://freegeoip.app/json', {
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      });
       if (response.status === 200) {
         const { city, country_code } = response.data;
 
